@@ -80,33 +80,30 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+    import { onMounted, ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
-const router = useRouter()
+    const router = useRouter()
 
-let invoices = ref([])
-let searchInvoice = ref([])
+    let invoices = ref([])
+    let searchInvoice = ref([])
 
-onMounted( async () => {
-    getInvoices()
-})
+    onMounted( async () => {
+        getInvoices()
+    })
 
-const getInvoices = async () => {
-    let response = await axios.get("/api/get_all_invoice")
-    invoices.value = response.data.invoices
-}
+    const getInvoices = async () => {
+        let response = await axios.get("/api/get_all_invoice")
+        invoices.value = response.data.invoices
+    }
 
-const Search = async () => {
-    let response = await axios.get('/api/search_invoice?s='+searchInvoice.value)
-    invoices.value = response.data.invoices
-}
+    const Search = async () => {
+        let response = await axios.get('/api/search_invoice?s='+searchInvoice.value)
+        invoices.value = response.data.invoices
+    }
 
-const newInvoice = async () => {
-    let form = await axios.get('/api/new_invoice')
-
-    console.log('form '+ form.data)
-
-    router.push('/invoice/new')
-}
+    const newInvoice = async () => {
+        let form = await axios.get('/api/new_invoice')
+        router.push('/invoice/new')
+    }
 </script>
