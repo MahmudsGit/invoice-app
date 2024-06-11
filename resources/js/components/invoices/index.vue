@@ -60,7 +60,7 @@
 
             <!-- item 1 -->
             <div class="table--items" v-for="item in invoices" :key="item.id" v-if="invoices.length > 0">
-                <a href="#" class="table--items--transactionId">#{{ item.id }}</a>
+                <a href="#" @click="onShow(item.id)">#{{ item.id }}</a>
                 <p>{{ item.date }}</p>
                 <p>{{ item.number }}</p>
                 <p v-if="item.customer">
@@ -80,8 +80,8 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
-    import { useRouter } from 'vue-router';
+    import { onMounted, ref } from 'vue'
+    import { useRouter } from 'vue-router'
 
     const router = useRouter()
 
@@ -105,5 +105,9 @@
     const newInvoice = async () => {
         let form = await axios.get('/api/new_invoice')
         router.push('/invoice/new')
+    }
+
+    const onShow = async (id) => {
+        router.push('/invoice/show/'+id)
     }
 </script>

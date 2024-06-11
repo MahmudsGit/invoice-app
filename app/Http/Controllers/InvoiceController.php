@@ -6,6 +6,7 @@ use App\Models\Counter;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
@@ -81,6 +82,7 @@ class InvoiceController extends Controller
         $invoicedata['date'] = $request->input('date');
         $invoicedata['due_date'] = $request->input('due_date');
         $invoicedata['reference'] = $request->input('reference');
+        $invoicedata['discount'] = $request->input('discount');
         $invoicedata['terms_and_conditions'] = $request->input('terms_and_conditions');
 
         $invoice = Invoice::create($invoicedata);
@@ -93,6 +95,14 @@ class InvoiceController extends Controller
             
             InvoiceItem::create($itemdata);
         }
+    }
+
+    public function show_invoice($id){
+        $invoice = Invoice::with(['customer', 'invoice_items.product'])->find($id);
+        
+        return response()->json([
+            'invoice' => $invoice
+        ], 200);
     }
 
 }

@@ -17,10 +17,15 @@ class Invoice extends Model
         'due_date',
         'reference',
         'number',
+        'discount',
         'terms_and_conditions',
     ];
     
     public function customer(){
         return $this->belongsTo(Customer::class);
+    }
+
+    public function invoice_items(){
+        return $this->hasMany(InvoiceItem::class);
     }
 }
