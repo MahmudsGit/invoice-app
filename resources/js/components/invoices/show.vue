@@ -18,7 +18,7 @@
                     <ul class="card__header-list">
                         <li>
                             <!-- Select Btn Option -->
-                            <button class="selectBtnFlat">
+                            <button class="selectBtnFlat" @click="print()">
                                 <i class="fas fa-print"></i>
                                 Print
                             </button>
@@ -26,7 +26,7 @@
                         </li>
                         <li>
                             <!-- Select Btn Option -->
-                            <button class="selectBtnFlat">
+                            <button class="selectBtnFlat" @click="onEdit(form.id)">
                                 <i class=" fas fa-reply"></i>
                                 Edit
                             </button>
@@ -135,7 +135,10 @@
 <script setup>
     import { onMounted, ref } from "vue";
     import axios from "axios"
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter()
+    
     onMounted(async () => {
         getInvoice()
     })
@@ -153,5 +156,14 @@
         let response = await axios.get(`/api/show_invoice/${props.id}`)
         console.log(response.data.invoice)
         form.value = response.data.invoice
+    }
+
+    const print = async (id) => {
+        window.print()
+        router.push('/').catch(() => {})
+    }
+    const onEdit = async (id) => {
+        console.log('hello')
+        router.push('/invoice/edit/'+id)
     }
 </script>
