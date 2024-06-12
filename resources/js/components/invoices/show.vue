@@ -90,7 +90,7 @@
                     <!-- item 1 -->
 
                     <div class="table--items3" v-for="(item, i) in form.invoice_items">
-                        <p>{{ i+1 }}</p>
+                        <p>{{ i + 1 }}</p>
                         <p>{{ item.product.description }}</p>
                         <p>$ {{ item.product.unit_price }}</p>
                         <p>{{ item.quantity }}</p>
@@ -133,37 +133,37 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from "vue";
-    import axios from "axios"
-    import { useRouter } from 'vue-router';
+import { onMounted, ref } from "vue";
+import axios from "axios"
+import { useRouter } from 'vue-router';
 
-    const router = useRouter()
-    
-    onMounted(async () => {
-        getInvoice()
-    })
+const router = useRouter()
 
-    let form = ref({ id:'' })
+onMounted(async () => {
+    getInvoice()
+})
 
-    const props = defineProps({
-        id:{
-            type:String,
-            default:''
-        }
-    })
+let form = ref({ id: '' })
 
-    const getInvoice = async () => {
-        let response = await axios.get(`/api/show_invoice/${props.id}`)
-        console.log(response.data.invoice)
-        form.value = response.data.invoice
+const props = defineProps({
+    id: {
+        type: String,
+        default: ''
     }
+})
 
-    const print = async (id) => {
-        window.print()
-        router.push('/').catch(() => {})
-    }
-    const onEdit = async (id) => {
-        console.log('hello')
-        router.push('/invoice/edit/'+id)
-    }
+const getInvoice = async () => {
+    let response = await axios.get(`/api/show_invoice/${props.id}`)
+    console.log(response.data.invoice)
+    form.value = response.data.invoice
+}
+
+const print = async (id) => {
+    window.print()
+    router.push('/').catch(() => { })
+}
+const onEdit = async (id) => {
+    console.log('hello')
+    router.push('/invoice/edit/' + id)
+}
 </script>

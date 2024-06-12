@@ -23,34 +23,34 @@ class InvoiceController extends Controller
     {
         $search = $request->get('s');
 
-        if($search != null){
+        if ($search != null) {
             $invoices = Invoice::with('customer')
                 ->where('id', 'LIKE', "%$search%")
                 ->get();
-                
+
             return response()->json([
                 'invoices' => $invoices
             ], 200);
-        }else{
+        } else {
             return $this->get_all_invoice();
         }
     }
-    
+
     public function create_invoice(Request $request)
     {
         $counter = Counter::where('key', 'invoice')->first();
         $random = Counter::where('key', 'invoice')->first();
 
         $invoice = Invoice::orderBy('id', 'DESC')->first();
-        if($invoice){
-            $invoice = $invoice->id+1;
+        if ($invoice) {
+            $invoice = $invoice->id + 1;
             $counters = $counter->value + $invoice;
-        }else{
+        } else {
             $counters = $counter->value;
         }
 
         $formData = [
-            'number' => $counter->prefix.$counters,
+            'number' => $counter->prefix . $counters,
             'customer_id' => null,
             'customer' => null,
             'date' => date('Y-m-d'),
@@ -87,22 +87,22 @@ class InvoiceController extends Controller
 
         $invoice = Invoice::create($invoicedata);
 
-        foreach(json_decode($invoiceitem) as $item){
+        foreach (json_decode($invoiceitem) as $item) {
             $itemdata['product_id'] = $item->id;
             $itemdata['invoice_id'] = $invoice->id;
             $itemdata['quantity'] = $item->quantity;
             $itemdata['unit_price'] = $item->unit_price;
-            
+
             InvoiceItem::create($itemdata);
         }
     }
 
-    public function show_invoice($id){
+    public function show_invoice($id)
+    {
         $invoice = Invoice::with(['customer', 'invoice_items.product'])->find($id);
-        
+
         return response()->json([
             'invoice' => $invoice
         ], 200);
     }
-
 }
