@@ -48,10 +48,10 @@
                     <!-- item 1 -->
                     <div class="table--items2" v-for="(item, i) in form.invoice_items">
                         <p v-if="item.product">
-                            #{{ item.product.item_code }} {{ item.product.description }} 
+                            #{{ item.product.item_code }} {{ item.product.description }}
                         </p>
                         <p v-else>
-                            #{{ item.item_code }} {{ item.description }} 
+                            #{{ item.item_code }} {{ item.description }}
                         </p>
                         <p>
                             <input type="text" class="input" v-model="item.unit_price">
@@ -140,7 +140,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-// import axios from "axios"
 
 const router = useRouter()
 
@@ -151,7 +150,7 @@ onMounted(async () => {
 })
 
 let form = ref({
-    id:''
+    id: ''
 })
 let allcustomers = ref([])
 let showModal = ref(false)
@@ -176,9 +175,9 @@ const getAllCustomers = async () => {
 }
 
 const deleteInvoiceItem = (id, i) => {
-    form.value.invoice_items.splice(i,1)
-    if (id != undefined){
-        axios.get('/api/delete_invoice_item/'+id)
+    form.value.invoice_items.splice(i, 1)
+    if (id != undefined) {
+        axios.get('/api/delete_invoice_item/' + id)
     }
 }
 
@@ -210,7 +209,7 @@ const getproducts = async () => {
 
 const subTotal = () => {
     let total = 0
-    if(form.value.invoice_items){
+    if (form.value.invoice_items) {
         form.value.invoice_items.map((data) => {
             total = total + (data.quantity * data.unit_price)
         })
@@ -250,7 +249,7 @@ const onEdit = (id) => {
             })
             .catch(error => {
                 console.error('There was an error updating the invoice:', error);
-        });
+            });
     }
 }
 </script>

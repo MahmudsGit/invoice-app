@@ -161,9 +161,11 @@ const print = async (id) => {
     window.print()
     router.push('/').catch(() => { })
 }
+
 const onEdit = async (id) => {
     router.push('/invoice/edit/' + id)
 }
+
 const onDelete = async (id) => {
     axios.get('/api/invoice_delete/' + id)
     router.push('/');

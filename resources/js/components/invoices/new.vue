@@ -220,7 +220,6 @@ const onSave = () => {
         let Total = 0
         Total = total()
 
-
         const formData = new FormData()
         formData.append('invoice_item', JSON.stringify(listCart.value))
         formData.append('customer_id', customer_id.value)

@@ -6,7 +6,6 @@ use App\Models\Counter;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
@@ -95,6 +94,8 @@ class InvoiceController extends Controller
 
             InvoiceItem::create($itemdata);
         }
+
+        return response()->json(['message' => 'Invoice Created successfully'], 200);
     }
 
     public function show_invoice($id)
@@ -105,7 +106,7 @@ class InvoiceController extends Controller
             'invoice' => $invoice
         ], 200);
     }
-    
+
     public function edit_invoice($id)
     {
         $invoice = Invoice::with(['customer', 'invoice_items.product'])->find($id);
@@ -119,11 +120,14 @@ class InvoiceController extends Controller
     {
         $invoice = InvoiceItem::findOrFail($id);
         $invoice->delete();
+
+        return response()->json(['message' => 'Invoice Item Deleted successfully'], 200);
     }
+
     public function update_invoice(Request $request, $id)
     {
-        $invoice = Invoice::where('id',$id)->first();
-        
+        $invoice = Invoice::where('id', $id)->first();
+
         $invoice->sub_total = $request->input('subtotal');
         $invoice->total = $request->input('total');
         $invoice->customer_id = $request->input('customer_id');
@@ -149,11 +153,14 @@ class InvoiceController extends Controller
 
         return response()->json(['message' => 'Invoice updated successfully'], 200);
     }
-    
+
     public function delete_invoice($id)
     {
         $invoice = Invoice::findOrFail($id);
         $invoice->delete();
         InvoiceItem::where('invoice_id', $id)->delete();
+
+
+        return response()->json(['message' => 'Invoice Deleted successfully'], 200);
     }
 }
