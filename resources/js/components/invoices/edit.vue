@@ -243,7 +243,7 @@ const onEdit = (id) => {
         formData.append('total', Total)
         formData.append('terms_and_conditions', form.value.terms_and_conditions)
 
-        axios.put(`/api/update_invoice/${form.value.id}`, formData)
+        axios.post(`/api/update_invoice/${form.value.id}`, formData)
             .then(response => {
                 console.log('Invoice updated successfully');
                 router.push('/');
@@ -251,8 +251,6 @@ const onEdit = (id) => {
             .catch(error => {
                 console.error('There was an error updating the invoice:', error);
         });
-        form.value.invoice_items = []
-        router.push('/')
     }
 }
 </script>

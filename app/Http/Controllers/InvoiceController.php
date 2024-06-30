@@ -122,7 +122,6 @@ class InvoiceController extends Controller
     }
     public function update_invoice(Request $request, $id)
     {
-        Log::info('hhh');
         $invoice = Invoice::where('id',$id)->first();
         
         $invoice->sub_total = $request->input('subtotal');
@@ -137,7 +136,6 @@ class InvoiceController extends Controller
 
         $invoice->save();
 
-        // Delete old invoice items and create new ones
         InvoiceItem::where('invoice_id', $id)->delete();
         foreach (json_decode($request->input('invoice_item')) as $item) {
             $itemdata = [
