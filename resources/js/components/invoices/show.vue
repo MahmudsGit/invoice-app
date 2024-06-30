@@ -154,7 +154,6 @@ const props = defineProps({
 
 const getInvoice = async () => {
     let response = await axios.get(`/api/show_invoice/${props.id}`)
-    console.log(response.data.invoice)
     form.value = response.data.invoice
 }
 
@@ -163,7 +162,6 @@ const print = async (id) => {
     router.push('/').catch(() => { })
 }
 const onEdit = async (id) => {
-    console.log('hello')
     router.push('/invoice/edit/' + id)
 }
 </script>
