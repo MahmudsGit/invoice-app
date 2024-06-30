@@ -149,4 +149,11 @@ class InvoiceController extends Controller
 
         return response()->json(['message' => 'Invoice updated successfully'], 200);
     }
+    
+    public function delete_invoice($id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $invoice->delete();
+        InvoiceItem::where('invoice_id', $id)->delete();
+    }
 }

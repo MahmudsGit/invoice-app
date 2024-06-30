@@ -34,7 +34,7 @@
                         </li>
                         <li>
                             <!-- Select Btn Option -->
-                            <button class="selectBtnFlat ">
+                            <button class="selectBtnFlat " @click="onDelete(form.id)">
                                 <i class=" fas fa-pencil-alt"></i>
                                 Delete
                             </button>
@@ -163,5 +163,9 @@ const print = async (id) => {
 }
 const onEdit = async (id) => {
     router.push('/invoice/edit/' + id)
+}
+const onDelete = async (id) => {
+    axios.get('/api/invoice_delete/' + id)
+    router.push('/');
 }
 </script>
